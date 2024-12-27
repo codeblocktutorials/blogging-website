@@ -1,0 +1,85 @@
+.hero {
+    background: url('https://sellpicks.soccertipsters.com/images/home-bg.jpg') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 120px 20px;
+    position: relative;
+  }
+
+  .navbar {
+    transition: all 0.3s ease;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Dark overlay for better text visibility */
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .hero span {
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
+
+  .membership-section {
+    margin-top: 50px;
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
+
+  hr {
+    border: 1px solid #dee2e6;
+  }
+
+  /* WhatsApp Button */
+  .whatsapp-button {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: #25d366;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 60px;
+          height: 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+          cursor: pointer;
+      }
+
+      .whatsapp-button img {
+          width: 35px;
+          height: 35px;
+      }
+
+      .whatsapp-button:hover {
+          background-color: #1eb95a;
+      }
+
+
+
+      img{
+        width:100%;
+        height:500px;
+      }

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login and Manage Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="/assests/style.css">
+     <link rel="stylesheet" href="./assests/bootsraps.css">
+  <link rel="stylesheet" href="./assests/bootsraps.js">
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getDatabase, ref, get, update, remove } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVqlUcgNhoGtaOxM1qPf3s32eCvh705fU",
+            authDomain: "my-first-project-fd7f2.firebaseapp.com",
+            databaseURL: "https://my-first-project-fd7f2-default-rtdb.firebaseio.com",
+            projectId: "my-first-project-fd7f2",
+            storageBucket: "my-first-project-fd7f2.firebasestorage.app",
+            messagingSenderId: "150751881615",
+            appId: "1:150751881615:web:3e0c60be1ba3c8257903fa",
+            measurementId: "G-JJ194L99DS"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Reference to the 'blogs' node in Firebase Realtime Database
+        const blogsRef = ref(database, 'blogs');
+
+        // Fetch blog posts from Firebase
+        function loadBlogPosts() {
+            get(blogsRef)
+                .then((snapshot) => {
+                    const blogsData = snapshot.val();
+                    const blogContainer = document.getElementById('blogPosts');
+
+                    // Clear existing posts (if any)
+                    blogContainer.innerHTML = '';
+
+                    // Check if there are any blog posts
+                    if (blogsData) {
+                        // Loop through the blog posts and display them
+                        Object.keys(blogsData).forEach(blogId => {
+                            const blog = blogsData[blogId];
+                            const blogCard = `
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <img src="${blog.image}" class="card-img-top" alt="Blog Image">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${blog.title}</h5>
+                                            <p class="card-text">${blog.content}</p>
+                                            <button class="btn btn-primary edit-btn" data-id="${blogId}" data-title="${blog.title}" data-content="${blog.content}" data-image="${blog.image}">Edit</button>
+                                            <button class="btn btn-danger delete-btn" data-id="${blogId}">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            blogContainer.innerHTML += blogCard;
+                        });
+
+                        // Attach event listeners to Edit and Delete buttons
+                        document.querySelectorAll('.edit-btn').forEach(button => {
+                            button.addEventListener('click', editBlog);
+                        });
+
+                        document.querySelectorAll('.delete-btn').forEach(button => {
+                            button.addEventListener('click', deleteBlog);
+                        });
+                    } else {
+                        // If no blog posts are available
+                        blogContainer.innerHTML = '<p>No blog posts available.</p>';
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error fetching blog posts:', error);
+                });
+        }
+
+        // Function to edit a blog
+        function editBlog(event) {
+            const button = event.target;
+            const blogId = button.getAttribute('data-id');
+            const title = button.getAttribute('data-title');
+            const content = button.getAttribute('data-content');
+            const image = button.getAttribute('data-image');
+
+            // Fill the form with the existing blog data
+            document.getElementById('editTitle').value = title;
+            document.getElementById('editContent').value = content;
+            document.getElementById('editImage').value = image;
+
+            // Store the blog ID in a hidden field for submission
+            document.getElementById('blogId').value = blogId;
+        }
+
+        // Function to delete a blog post
+        function deleteBlog(event) {
+            const blogId = event.target.getAttribute('data-id');
+            const blogRefToDelete = ref(database, `blogs/${blogId}`);
+
+            remove(blogRefToDelete)
+                .then(() => {
+                    alert('Blog post deleted successfully!');
+                    loadBlogPosts();
+                })
+                .catch((error) => {
+                    console.error('Error deleting blog post:', error);
+                });
+        }
+
+        // Handle the form submission to update a blog
+        const editForm = document.getElementById('editForm');
+        editForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const blogId = document.getElementById('blogId').value;
+            const title = document.getElementById('editTitle').value;
+            const content = document.getElementById('editContent').value;
+            const image = document.getElementById('editImage').value;
+
+            const blogRefToUpdate = ref(database, `blogs/${blogId}`);
+            update(blogRefToUpdate, {
+                title,
+                content,
+                image
+            })
+            .then(() => {
+                alert('Blog post updated successfully!');
+                loadBlogPosts();
+            })
+            .catch((error) => {
+                console.error('Error updating blog post:', error);
+            });
+        });
+
+        // Authentication Logic
+        const mainEmail = "b2xhbGVrYW5hZGVsZXllQGdtYWlsLmNvbQ=="; // 
+        const adminEmail = atob(mainEmail); // 
+        const adminPasswordHash = "3ea2e39cc1e9b585181b5866b3a5809055c85204aed52240a253db1d16b8addd"; // 
+
+        // DOM Elements
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const loginBtn = document.getElementById("login-btn");
+        const loginSection = document.getElementById("login-section");
+        const manageSection = document.getElementById("manage-section");
+
+        // Hash Password Function
+        function hashPassword(password) {
+            return CryptoJS.SHA256(password).toString();
+        }
+
+        loginBtn.addEventListener("click", () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+
+            // Validate Credentials
+            const enteredPasswordHash = hashPassword(password);
+            if (email === adminEmail && enteredPasswordHash === adminPasswordHash) {
+                alert("Login successful!");
+                loginSection.style.display = "none";
+                manageSection.style.display = "block";
+                loadBlogPosts();
+            } else {
+                alert("Access denied. Invalid credentials.");
+            }
+        });
+    </script>
+</head>
+<!--  -->
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">SoccerTipsters</a>
+      <button id="navbar-toggler" class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="view-blog.html">Blogs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="manage-blog.html">Manage</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn btn-warning text-dark px-3 ms-2" href="create-blog.html">Create Stories</a>
+            </li>
+          </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+<!--  -->
+<body class="bg-light">
+    <div class="container py-5">
+        <div id="login-section" class="card p-4 shadow-sm">
+            <h1 class="text-center mb-4">Login to manage Stories</h1>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+            <button id="login-btn" class="btn btn-primary w-100">Login</button>
+        </div>
+
+        <div id="manage-section" style="display: none;">
+            <h1 class="text-center mb-4">Manage Blog Posts</h1>
+
+            <!-- Container to display blog posts -->
+            <div id="blogPosts" class="row">
+                <!-- Blog posts will be dynamically added here -->
+            </div>
+
+            <hr>
+
+            <!-- Edit Blog Form -->
+            
+            <h2>Edit Blog Post</h2>
+        <form id="editForm" class="card p-4 shadow-sm">
+            <input type="hidden" id="blogId">
+            <div class="mb-3">
+                <label for="editTitle" class="form-label">Blog Title</label>
+                <input type="text" class="form-control" id="editTitle" placeholder="Enter blog title" required>
+            </div>
+            <div class="mb-3">
+                <label for="editContent" class="form-label">Blog Content</label>
+                <textarea class="form-control" id="editContent" rows="5" placeholder="Write your content here" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="editImage" class="form-label">Blog Image URL</label>
+                <input type="url" class="form-control" id="editImage" placeholder="Enter image URL" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Update Blog</button>
+        </form>
+
+        <!-- Back to Manage Blogs -->
+        <div class="text-center mt-3">
+            <button id="backToManageBlogs" class="btn btn-secondary">Back to Manage Blogs</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Show Manage Blogs Section
+    const showManageBlogs = () => {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('manage-blogs-section').style.display = 'block';
+    };
+
+    // Hide Manage Blogs Section
+    const hideManageBlogs = () => {
+        document.getElementById('login-section').style.display = 'block';
+        document.getElementById('manage-blogs-section').style.display = 'none';
+    };
+
+    // Back Button Event Listener
+    document.getElementById('backToManageBlogs').addEventListener('click', hideManageBlogs);
+
+    // Initial Visibility
+    document.getElementById('manage-blogs-section').style.display = 'none';
+</script>
+
+
+
+
+<!--  -->
+
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p class="mb-1">&copy; 2024 All Rights Reserved</p>
+        <div class="d-flex justify-content-center">
+            <a href="#" class="text-white mx-2"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-white mx-2"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-white mx-2"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-white mx-2"><i class="bi bi-linkedin"></i></a>
+        </div>
+    </div>
+</footer>
+
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggler = document.getElementById('navbar-toggler');
+      const navCollapse = document.getElementById('navbarNav');
+
+      toggler.addEventListener('click', () => {
+        // Toggle the `show` class on the navbar
+        const isExpanded = navCollapse.classList.contains('show');
+        if (isExpanded) {
+          navCollapse.classList.remove('show');
+          toggler.setAttribute('aria-expanded', 'false');
+        } else {
+          navCollapse.classList.add('show');
+          toggler.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+</script>
+</html>

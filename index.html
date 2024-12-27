@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Membership Plans</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <link rel="stylesheet" href="./assests/style.css">
+  <link rel="stylesheet" href="./assests/bootsraps.css">
+  <link rel="stylesheet" href="./assests/bootsraps.js">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">SoccerTipovi</a>
+      <button id="navbar-toggler" class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="./pages/view-blog.html">Blogs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./pages/contact.html">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./pages/manage-blog.html">Manage</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-warning text-dark px-3 ms-2" href="./pages/create-blog.html">Create Stories</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-content container">
+      
+      <h1>Tipster Program</h1>
+      <p>Interested in selling your betting tips on SoccerTipsters?</p>
+      <p>Our tipster program will guide you to success.</p>
+      <a href="./pages/contact.html" class="btn btn-warning btn-lg">Partner with Us</a>
+    </div>
+  </div>
+
+
+<!--  -->
+
+<!-- What We Do Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="fw-bold">What We <b>Do</b></h1>
+            <p class="lead text-muted">
+                Empowering individuals with actionable insights and unparalleled opportunities in the sports tipping industry.
+            </p>
+        </div>
+        <div class="row text-center">
+            <!-- Money Icon Section -->
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="fas fa-money-bill-wave fa-3x text-success"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Unlock Financial Opportunities</h5>
+                        <p class="card-text text-muted">
+                            Dive into high-yield strategies that ensure financial success and stability for all participants.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Bags Icon Section -->
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="fas fa-briefcase fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Collaborate with Experts</h5>
+                        <p class="card-text text-muted">
+                            Join forces with industry-leading tipsters and access valuable tools to maximize your success.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Success Icon Section -->
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="fas fa-trophy fa-3x text-warning"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Achieve Unmatched Success</h5>
+                        <p class="card-text text-muted">
+                            Leverage our platform to turn your expertise into a profitable and impactful career.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- slider -->
+
+<!-- Player Showcase Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Last few Ticktes</h2>
+            <p class="text-muted">Showcasing our previous tickets that define our success.</p>
+        </div>
+        <!-- Bootstrap Carousel -->
+        <div id="playerShowcaseCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <img src="./images/img1.jpeg" class="d-block w-100 rounded" alt="Player 1">
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <h3 class="fw-bold">Player 1</h3>
+                            <p class="text-muted">
+                                A skilled and versatile athlete, Player 1 brings unmatched energy to the field.
+                            </p>
+                        </div> -->
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="carousel-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <img src="./images/img2.jpeg" alt="Player 2">
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <h3 class="fw-bold">Player 2</h3>
+                            <p class="text-muted">
+                                Known for precision and speed, Player 2 is a rising star in the industry.
+                            </p>
+                        </div> -->
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="carousel-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <img src="./images/img3.jpeg" class="d-block w-100 rounded" alt="Player 3">
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <h3 class="fw-bold">Player 3</h3>
+                            <p class="text-muted">
+                                Player 3 is celebrated for teamwork and exceptional on-field vision.
+                            </p>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <img src="./images/img4.jpeg" class="d-block w-100 rounded" alt="Player 3">
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <h3 class="fw-bold">Player 3</h3>
+                            <p class="text-muted">
+                                Player 3 is celebrated for teamwork and exceptional on-field vision.
+                            </p>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <img src="./images/img5.jpeg" class="d-block w-100 rounded" alt="Player 3">
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <h3 class="fw-bold">Player 3</h3>
+                            <p class="text-muted">
+                                Player 3 is celebrated for teamwork and exceptional on-field vision.
+                            </p>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <img src="./images/img6.jpeg" class="d-block w-100 rounded" alt="Player 3">
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <h3 class="fw-bold">Player 3</h3>
+                            <p class="text-muted">
+                                Player 3 is celebrated for teamwork and exceptional on-field vision.
+                            </p>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <img src="./images/img7.jpeg" class="d-block w-100 rounded" alt="Player 3">
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <h3 class="fw-bold">Player 3</h3>
+                            <p class="text-muted">
+                                Player 3 is celebrated for teamwork and exceptional on-field vision.
+                            </p>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <img src="./images/img8.jpeg" class="d-block w-100 rounded" alt="Player 3">
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <h3 class="fw-bold">Player 3</h3>
+                            <p class="text-muted">
+                                Player 3 is celebrated for teamwork and exceptional on-field vision.
+                            </p>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <img src="./images/img9.jpeg" class="d-block w-100 rounded" alt="Player 3">
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <h3 class="fw-bold">Player 3</h3>
+                            <p class="text-muted">
+                                Player 3 is celebrated for teamwork and exceptional on-field vision.
+                            </p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#playerShowcaseCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#playerShowcaseCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+
+<!-- slider -->
+
+
+
+  <!--  -->
+
+  <!-- Membership Plans Section -->
+  <div class="container membership-section text-center" id="membership">
+    <h2 class="fw-bold mb-4">Choose Your Membership Plan</h2>
+
+    <!-- Free Plan -->
+    <div class="card mx-auto" style="max-width: 400px;">
+      <div class="card-body">
+        <h3 class="card-title">Basic Plan</h3>
+        <p class="card-text">Price: $10/month</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">3 Tips Per Week</li>
+          <li class="list-group-item">Commission: 20%</li>
+          <li class="list-group-item">Hit Rate: 60%</li>
+        </ul>
+        <button class="btn btn-primary mt-3 w-100" onclick="redirectToPayment('free')">Subscribe</button>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Basic Plan -->
+    <div class="card mx-auto" style="max-width: 400px;">
+      <div class="card-body">
+        <h3 class="card-title">Medium Plan</h3>
+        <p class="card-text">Price: $50/month</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">5 Tips Per Week</li>
+          <li class="list-group-item">Commission: 10%</li>
+          <li class="list-group-item">Hit Rate: 80%</li>
+        </ul>
+        <button class="btn btn-primary mt-3 w-100" onclick="redirectToPayment('basic')">Subscribe</button>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Premium Plan -->
+    <div class="card mx-auto" style="max-width: 400px;">
+      <div class="card-body">
+        <h3 class="card-title">Premium Plan</h3>
+        <p class="card-text">Price: $100/month</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">12 Tips Per Week</li>
+          <li class="list-group-item">Commission: 0%</li>
+          <li class="list-group-item">Hit Rate: 95%</li>
+        </ul>
+        <button class="btn btn-primary mt-3 w-100" onclick="redirectToPayment('premium')">Subscribe</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Sticky WhatsApp Icon -->
+<!-- WhatsApp Button -->
+<a href="https://wa.me/1234567890" target="_blank" class="whatsapp-button" title="Chat with us on WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon">
+</a>
+
+<!-- Footer Section -->
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p class="mb-1">&copy; 2024 All Rights Reserved</p>
+        <div class="d-flex justify-content-center">
+            <a href="#" class="text-white mx-2"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-white mx-2"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-white mx-2"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-white mx-2"><i class="bi bi-linkedin"></i></a>
+        </div>
+    </div>
+</footer>
+
+</body>
+
+<!-- Bootstrap and Icons JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+  
+
+  <!-- JavaScript Function to Redirect to Payment Gateway -->
+  <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+      const toggler = document.getElementById('navbar-toggler');
+      const navCollapse = document.getElementById('navbarNav');
+
+      toggler.addEventListener('click', () => {
+        // Toggle the `show` class on the navbar
+        const isExpanded = navCollapse.classList.contains('show');
+        if (isExpanded) {
+          navCollapse.classList.remove('show');
+          toggler.setAttribute('aria-expanded', 'false');
+        } else {
+          navCollapse.classList.add('show');
+          toggler.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+
+
+
+    function redirectToPayment(plan) {
+      let paymentUrl;
+      switch (plan) {
+        case 'free':
+          paymentUrl = 'https://pay.squadco.com/HB5TLU'; // Replace with your payment gateway URL for Free Plan
+          break;
+        case 'basic':
+          paymentUrl = 'https://pay.squadco.com/GZDPHR'; // Replace with your payment gateway URL for Basic Plan
+          break;
+        case 'premium':
+          paymentUrl = 'https://pay.squadco.com/D2ZHP9'; // Replace with your payment gateway URL for Premium Plan
+          break;
+        default:
+          paymentUrl = '#';
+      }
+      window.location.href = paymentUrl;
+    }
+  </script>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
